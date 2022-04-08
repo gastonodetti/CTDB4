@@ -1,4 +1,5 @@
  // Aquí realizamos un la consulta de la promesa, esperando su respuesta asíncrona
+ 
 async function renderizar(){
 
     try {
@@ -12,6 +13,7 @@ async function renderizar(){
 
 
 }
+
 function renderizarDatosUsuario(datos) {
     /* -------------------------------- CONSIGNA 1 -------------------------------- */
     // Aquí deben desarrollar una función que muestre en pantalla:
