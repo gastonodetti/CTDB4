@@ -1,3 +1,5 @@
+import {validarTexto, normalizarTexto, validarEmail, normalizarEmai, validarContrasenia, compararContrasenias} from "./utils"
+
 window.addEventListener('load', function () {
     /* ---------------------- obtenemos variables globales ---------------------- */
     const form = document.forms[0];
@@ -12,6 +14,10 @@ window.addEventListener('load', function () {
     /* -------------------------------------------------------------------------- */
     form.addEventListener('submit', function (event) {
         event.preventDefault();
+        // validamos imputs
+
+        
+
         // //creamos el cuerpo de la request
         const payload = {
             firstName: nombre.value,
@@ -37,6 +43,7 @@ window.addEventListener('load', function () {
     /* -------------------------------------------------------------------------- */
     /*                    FUNCIÓN 2: Realizar el signup [POST]                    */
     /* -------------------------------------------------------------------------- */
+    
     function realizarRegister(settings) {
         console.log("Lanzando la consulta a la API");
         fetch(`${url}/users`, settings)

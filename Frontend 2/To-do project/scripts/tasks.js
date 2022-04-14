@@ -1,15 +1,8 @@
-/*
-
-const form = document.querySelector(".nueva-tarea")
-const listadoTareas = document.querySelector(".tareas-pendientes")
-let tareasUsuario = []
-*/
-
 const urlBuscar = "https://ctd-todo-api.herokuapp.com/v1/"
 const jwt = JSON.parse(localStorage.getItem('jwt'))
 const campoTarea = document.getElementById("nuevaTarea")
 const botonCrearTarea = document.querySelector("button[type='submit']")
-let arrayTareas = []
+const ul = document.querySelector(".tareas-pendientes")
 
 //boton cerrar sesion
 
@@ -42,15 +35,14 @@ function obtenerDatosUser(jwt){
         console.log("Error:", err);
       })
 
-      
+      obtenerTareasUser(jwt)
   
 }
-obtenerDatosUser(jwt)
  
 //obtener listado de tareas de la api
 
 function obtenerTareasUser(jwt){
-  
+  return(
   fetch(`${urlBuscar}tasks` , {
     method: "GET",
     headers: {
@@ -59,14 +51,12 @@ function obtenerTareasUser(jwt){
   })
   .then(response => response.json())
   .then(data => {
-      arrayTareas = data
+    console.log(data)
+    renderizarTareas(data)
   })
   .catch(error => console.log(error))
-
+  )
 }
-
-
-obtenerTareasUser(jwt)
 
 //boton nueva tarea
 
@@ -93,67 +83,155 @@ function agregarNuevaTarea(){
       console.log("Error:", err);
     })
 
+  obtenerDatosUser(jwt)
 
   }  
 
 botonCrearTarea.addEventListener("click" , (event) => {
   event.preventDefault()
+  ul.innerHTML = ""
   agregarNuevaTarea()
 })
 
 //renderizar tareas
 
-function renderizarTareas(){
-  console.log(arrayTareas)
+function renderizarTareas(array){
+  // obtengo listados y limpio cualquier contenido interno
+  const tareasPendientes = document.querySelector('.tareas-pendientes');
+  const tareasTerminadas = document.querySelector('.tareas-terminadas');
+  tareasPendientes.innerHTML = "";
+  tareasTerminadas.innerHTML = "";
+
+  // buscamos el numero de finalizadas
+  const numeroFinalizadas = document.querySelector('#cantidad-finalizadas');
+  let contador = 0;
+  numeroFinalizadas.innerText = contador;
+
+  array.forEach(tarea => {
+    //variable intermedia para manipular la fecha
+    let fecha = new Date(tarea.createdAt);
+
+    if (tarea.completed) {
+      contador++;
+      //lo mandamos al listado de tareas completas
+      tareasTerminadas.innerHTML += `
+        <li class="tarea">
+          <div class="hecha">
+            <i class="fa-regular fa-circle-check"></i>
+          </div>
+          <div class="descripcion">
+            <p class="nombre">${tarea.description}</p>
+            <div class="cambios-estados">
+              <button onclick="retornarTarea(${tarea.id})" class="change incompleta" id="${tarea.id}" ><i class="fa-solid fa-rotate-left"></i></button>
+              <button onclick="eliminarTarea(${tarea.id})" class="borrar" id="${tarea.id}"><i class="fa-regular fa-trash-can"></i></button>
+            </div>
+          </div>
+        </li>
+                      `
+    } else {
+      //lo mandamos al listado de tareas sin terminar
+      tareasPendientes.innerHTML += `
+        <li class="tarea">
+          <button onclick="finalizarTarea(${tarea.id})" class="change" id="${tarea.id}"><i class="fa-regular fa-circle"></i></button>
+          <div class="descripcion">
+            <p class="nombre">${tarea.description}</p>
+            <p class="timestamp">${fecha.toLocaleDateString()}</p>
+          </div>
+        </li>
+                      `
+    }
+    // actualizamos el contador en la pantalla
+    numeroFinalizadas.innerText = contador;
+  })
 }
-renderizarTareas()
 
+// cambiar tarea a finalizada
 
+function finalizarTarea(id) {
 
+  let data = {
+    completed: true
+  }
 
+  fetch(`${urlBuscar}tasks/${id}`, {
 
+    method: "PUT",
+    headers: {
+        "authorization": jwt,
+        "Content-type": "application/json",
+    },
+    body: JSON.stringify(data)
+  })
 
+    .then(response =>  response.json())
+    .then((json) => {
+     
+       console.log(json)
+       obtenerDatosUser(jwt)
+         
+    })
+    .catch((err) => {
+      console.log("Error:", err);
+    })
 
+}
 
+//borrar tarea definitivamente
 
+function eliminarTarea(id) {
 
-/*
+  fetch(`${urlBuscar}tasks/${id}`, {
 
+    method: "DELETE",
+    headers: {
+        "authorization": jwt,
+    }
+  })
 
+    .then(response =>  response.json())
+    .then((json) => {
+     
+       console.log(json)
+       obtenerDatosUser(jwt)
+         
+    })
+    .catch((err) => {
+      console.log("Error:", err);
+    })
 
+}
 
+//volver tarea a pendiente
 
-
-function agregarNuevaTarea(){
-//creo objeto de la tarea y la sumo al array de tareas
-  let tareaPorAgregar = campoTarea.value 
-
-  let bodyTarea = {
-    description: tareaPorAgregar,
+function retornarTarea(id){
+  
+  let data = {
     completed: false
   }
 
- 
+  fetch(`${urlBuscar}tasks/${id}`, {
 
-//inserto tarea en la BD de la api
+    method: "PUT",
+    headers: {
+        "authorization": jwt,
+        "Content-type": "application/json",
+    },
+    body: JSON.stringify(data)
+  })
 
+    .then(response =>  response.json())
+    .then((json) => {
+     
+       console.log(json)
+       obtenerDatosUser(jwt)
+         
+    })
+    .catch((err) => {
+      console.log("Error:", err);
+    })
 
-//renderizo tareas en ul
-
-  tareasUsuario.unshift(bodyTarea)
-
-  let li = document.createElement("li")
-  li.className = "tarea"
-  li.innerText = bodyTarea.description
-
-  listadoTareas.appendChild(li)
-  
 }
 
-form.addEventListener("submit" , (event) => {
-  event.preventDefault()
-  agregarNuevaTarea()
-})
+// al iniciar la app se ejecuta esta funcion que anida a todas las demas
 
 obtenerDatosUser(jwt)
-*/

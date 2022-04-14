@@ -1,27 +1,31 @@
+
+
 /* ---------------------------------- texto --------------------------------- */
-function validarTexto(texto) {
+export function validarTexto(texto) {
+    if(texto.length > 20) {
+        alert("El largo del texto es excesivo")
+    } else {return texto}
+}
+
+export function normalizarTexto(texto) {
     
 }
 
-function normalizarTexto(texto) {
+/* --------------------------------- email --------------------------------- */
+export function validarEmail(email) {
     
 }
 
-/* ---------------------------------- email --------------------------------- */
-function validarEmail(email) {
-    
-}
-
-function normalizarEmail(email) {
+export function normalizarEmail(email) {
     
 }
 
 /* -------------------------------- password -------------------------------- */
-function validarContrasenia(contrasenia) {
+export function validarContrasenia(contrasenia) {
     
 }
 
-function compararContrasenias(contrasenia_1, contrasenia_2) {
+export function compararContrasenias(contrasenia_1, contrasenia_2) {
     
 }
 
