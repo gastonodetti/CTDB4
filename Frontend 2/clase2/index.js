@@ -57,3 +57,7 @@ do{
 } while (puntosJugador < 3 && puntosMaquina < 3)
 
 alert("Juego finalizado!")
+
+let a = JSON.parse(localStorage.getItem("a"))
+
+console.log(a)

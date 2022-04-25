@@ -54,6 +54,11 @@ fetch(`${urlBuscar}users/login`, {
     })
     .catch((err) => {
       console.log("Error:", err);
+      swal({
+        title: "Ups!",
+        text: "Ocurrió algún error",
+        icon: "error",
+      });
     })
 
 }

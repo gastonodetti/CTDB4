@@ -4,6 +4,7 @@ const campoTarea = document.getElementById("nuevaTarea")
 const botonCrearTarea = document.querySelector("button[type='submit']")
 const ul = document.querySelector(".tareas-pendientes")
 
+
 //boton cerrar sesion
 
 const closeButton = document.getElementById("closeApp")
@@ -93,6 +94,14 @@ botonCrearTarea.addEventListener("click" , (event) => {
   agregarNuevaTarea()
 })
 
+
+//eliminar skeleton
+
+setTimeout(() => {
+  let skeleton = document.querySelector(".skeleton")
+  skeleton.classList.remove("skeleton")
+}, 3000);
+
 //renderizar tareas
 
 function renderizarTareas(array){
@@ -126,8 +135,7 @@ function renderizarTareas(array){
               <button onclick="eliminarTarea(${tarea.id})" class="borrar" id="${tarea.id}"><i class="fa-regular fa-trash-can"></i></button>
             </div>
           </div>
-        </li>
-                      `
+        </li>`
     } else {
       //lo mandamos al listado de tareas sin terminar
       tareasPendientes.innerHTML += `
@@ -137,8 +145,7 @@ function renderizarTareas(array){
             <p class="nombre">${tarea.description}</p>
             <p class="timestamp">${fecha.toLocaleDateString()}</p>
           </div>
-        </li>
-                      `
+        </li>`
     }
     // actualizamos el contador en la pantalla
     numeroFinalizadas.innerText = contador;
@@ -235,3 +242,4 @@ function retornarTarea(id){
 // al iniciar la app se ejecuta esta funcion que anida a todas las demas
 
 obtenerDatosUser(jwt)
+

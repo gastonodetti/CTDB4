@@ -1,31 +1,31 @@
 
 
 /* ---------------------------------- texto --------------------------------- */
-export function validarTexto(texto) {
+function validarTexto(texto) {
     if(texto.length > 20) {
         alert("El largo del texto es excesivo")
     } else {return texto}
 }
 
-export function normalizarTexto(texto) {
+function normalizarTexto(texto) {
     
 }
 
 /* --------------------------------- email --------------------------------- */
-export function validarEmail(email) {
+function validarEmail(email) {
     
 }
 
-export function normalizarEmail(email) {
+function normalizarEmail(email) {
     
 }
 
 /* -------------------------------- password -------------------------------- */
-export function validarContrasenia(contrasenia) {
+function validarContrasenia(contrasenia) {
     
 }
 
-export function compararContrasenias(contrasenia_1, contrasenia_2) {
+function compararContrasenias(contrasenia_1, contrasenia_2) {
     
 }
 
