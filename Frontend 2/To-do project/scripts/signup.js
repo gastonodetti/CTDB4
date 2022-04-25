@@ -1,5 +1,3 @@
-import {validarTexto, normalizarTexto, validarEmail, normalizarEmai, validarContrasenia, compararContrasenias} from "./utils"
-
 window.addEventListener('load', function () {
     /* ---------------------- obtenemos variables globales ---------------------- */
     const form = document.forms[0];
@@ -7,6 +5,7 @@ window.addEventListener('load', function () {
     const apellido = document.querySelector('#inputApellido');
     const email = document.querySelector('#inputEmail');
     const password = document.querySelector('#inputPassword');
+    const passwordRepetida = document.getElementById("inputPasswordRepetida")
     const url = 'https://ctd-todo-api.herokuapp.com/v1';
 
     /* -------------------------------------------------------------------------- */
@@ -15,15 +14,19 @@ window.addEventListener('load', function () {
     form.addEventListener('submit', function (event) {
         event.preventDefault();
         // validamos imputs
-
         
+        let nombreValidado = validarTexto(nombre.value)
+        let apellidoValidado = validarTexto(apellido.value)
+        let emailValidado = validarEmail(email.value)
+        let contraseniaValidada = validarContrasenia(password.value)
+        let comparacionContrasenias = compararContrasenias(contraseniaValidada, passwordRepetida.value)        
 
         // //creamos el cuerpo de la request
         const payload = {
-            firstName: nombre.value,
-            lastName: apellido.value, 
-            email: email.value,
-            password: password.value
+            firstName: normalizarTexto(nombreValidado),
+            lastName: normalizarTexto(apellidoValidado), 
+            email: normalizarEmail(emailValidado),
+            password: comparacionContrasenias ? contraseniaValidada : alert("Las contraseñas no coinciden")
         };
         // //configuramos la request del Fetch
         const settings = {
