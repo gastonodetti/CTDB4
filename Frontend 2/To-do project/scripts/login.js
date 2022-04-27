@@ -1,7 +1,7 @@
 const buttonSignUp = document.querySelector("button")
 const emailInput = document.getElementById("inputEmail")
 const passwordInput = document.getElementById("inputPassword")
-const urlBuscar = "https://ctd-todo-api.herokuapp.com/v1/"
+const urlBuscar = "https://ctd-fe2-todo.herokuapp.com/v1/"
 
 buttonSignUp.addEventListener("click" , (event) => {
 

@@ -1,4 +1,4 @@
-const urlBuscar = "https://ctd-todo-api.herokuapp.com/v1/"
+const urlBuscar = "https://ctd-fe2-todo.herokuapp.com/v1/"
 const jwt = JSON.parse(localStorage.getItem('jwt'))
 const campoTarea = document.getElementById("nuevaTarea")
 const botonCrearTarea = document.querySelector("button[type='submit']")

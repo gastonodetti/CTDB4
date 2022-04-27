@@ -6,7 +6,7 @@ window.addEventListener('load', function () {
     const email = document.querySelector('#inputEmail');
     const password = document.querySelector('#inputPassword');
     const passwordRepetida = document.getElementById("inputPasswordRepetida")
-    const url = 'https://ctd-todo-api.herokuapp.com/v1';
+    const url = 'https://ctd-fe2-todo.herokuapp.com/v1/';
 
     /* -------------------------------------------------------------------------- */
     /*            FUNCIÓN 1: Escuchamos el submit y preparamos el envío           */
@@ -49,7 +49,7 @@ window.addEventListener('load', function () {
     
     function realizarRegister(settings) {
         console.log("Lanzando la consulta a la API");
-        fetch(`${url}/users`, settings)
+        fetch(`${url}users`, settings)
             .then(response => {
                 console.log(response);
 
